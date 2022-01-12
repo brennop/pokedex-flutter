@@ -8,14 +8,20 @@ class PokemonModel {
   final int number;
   final String imageURL;
   final String kind;
-
-  PokemonModel(this.name, this.number, this.imageURL, this.kind);
+  final int weight;
+  final int height;
 
   PokemonModel.fromJson(Map json)
       : name = json['name'],
         number = json["number"],
         imageURL = json["image_url"],
-        kind = json["kind"];
+        kind = json["kind"],
+        weight = json["weight"],
+        height = json["height"];
+
+  get readableName {
+    return name[0].toUpperCase() + name.substring(1);
+  }
 }
 
 /// controls a stream of pokemons

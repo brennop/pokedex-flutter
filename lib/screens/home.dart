@@ -40,28 +40,39 @@ class _HomeScreenState extends State<HomeScreen> {
             const Header(),
             Expanded(
               child: StreamBuilder<List<PokemonModel>>(
-                  stream: pokemons.stream,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else {
-                      return GridView.builder(
-                        padding: const EdgeInsets.all(12.0),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12.0,
-                          mainAxisSpacing: 12.0,
-                          childAspectRatio: 4/3,
-                        ),
-                        controller: scrollController,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return PokemonCard(pokemon: snapshot.data![index]);
-                        },
-                      );
-                    }
-                  }),
+                stream: pokemons.stream,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return GridView.builder(
+                      padding: const EdgeInsets.all(12.0),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12.0,
+                        mainAxisSpacing: 12.0,
+                        childAspectRatio: 4 / 3,
+                      ),
+                      controller: scrollController,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var pokemon = snapshot.data![index];
+                        return PokemonCard(
+                          pokemon: pokemon,
+                          onPress: () {
+                            showModalBottomSheet(
+                              backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) =>
+                                    PokemonInfo(pokemon: pokemon));
+                          },
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
             )
           ],
         ),
