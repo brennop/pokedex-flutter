@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pokedex/services/pokemons.dart';
+import 'package:pokedex/models.dart';
 
 class PokemonCard extends StatelessWidget {
-  const PokemonCard(
-      {Key? key,
-      required this.pokemon})
-      : super(key: key);
+  const PokemonCard({Key? key, required this.pokemon}) : super(key: key);
 
-  final Pokemon pokemon;
+  final PokemonModel pokemon;
 
   @override
   Widget build(BuildContext context) {

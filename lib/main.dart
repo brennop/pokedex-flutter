@@ -15,7 +15,6 @@ class App extends StatelessWidget {
       title: 'Pokedex',
       theme: theme,
       routes: routes,
-      initialRoute: "login",
     );
   }
 }

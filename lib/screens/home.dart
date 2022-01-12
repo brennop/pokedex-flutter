@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:pokedex/services/api.dart';
-import 'package:pokedex/services/pokemons.dart';
+import 'package:pokedex/models.dart';
 import 'package:pokedex/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,22 +10,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var pokemons = <Pokemon>[];
-  var page = 1;
+  PokemonsModel pokemons = PokemonsModel();
+  final scrollController = ScrollController();
 
-  _getPokemons() {
-    API.getPokemons(page: page).then((response) {
-      setState(() {
-        Iterable list = json.decode(response.body)["data"];
-        pokemons = list.map((pokemon) => Pokemon.fromJson(pokemon)).toList();
-      });
-    });
+  _onScroll() {
+    if (scrollController.position.maxScrollExtent == scrollController.offset) {
+      pokemons.loadMore();
+    }
   }
 
   @override
   void initState() {
+    scrollController.addListener(_onScroll);
     super.initState();
-    _getPokemons();
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(_onScroll);
+    super.dispose();
   }
 
   @override
@@ -39,14 +39,30 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const Header(),
             Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: pokemons.length,
-                itemBuilder: (context, index) {
-                  final data = pokemons[index];
-                  return PokemonCard(pokemon: data);
-                },
-              ),
+              child: StreamBuilder<List<PokemonModel>>(
+                  stream: pokemons.stream,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        controller: scrollController,
+                        itemCount: snapshot.data!.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index < snapshot.data!.length) {
+                            return PokemonCard(pokemon: snapshot.data![index]);
+                          } else if (pokemons.hasMore) {
+                            /// hack: this is not sure if it's loading
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else {
+                            return Container();
+                          }
+                        },
+                      );
+                    }
+                  }),
             )
           ],
         ),
