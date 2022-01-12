@@ -24,7 +24,7 @@ class PokemonsModel {
   bool hasMore = true;
 
   int _page = 1;
-  bool loading = false;
+  bool _loading = false;
   final List<Map> _data = [];
   final StreamController<List<Map>> _controller = StreamController.broadcast();
 
@@ -36,9 +36,9 @@ class PokemonsModel {
   }
 
   Future<void> loadMore() {
-    if (loading || !hasMore) return Future.value();
+    if (_loading || !hasMore) return Future.value();
 
-    loading = true;
+    _loading = true;
     return API.getPokemons(page: _page).then((response) {
       var body = json.decode(response.body);
       List<Map> data = List<Map>.from(body["data"]);
@@ -51,7 +51,7 @@ class PokemonsModel {
 
       hasMore = body["next_page"] != null;
       _page += 1;
-      loading = false;
+      _loading = false;
     });
   }
 }

@@ -45,20 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
-                      return ListView.builder(
-                        scrollDirection: Axis.vertical,
+                      return GridView.builder(
+                        padding: const EdgeInsets.all(12.0),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12.0,
+                          mainAxisSpacing: 12.0,
+                          childAspectRatio: 4/3,
+                        ),
                         controller: scrollController,
-                        itemCount: snapshot.data!.length + 1,
+                        itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-                          if (index < snapshot.data!.length) {
-                            return PokemonCard(pokemon: snapshot.data![index]);
-                          } else if (pokemons.hasMore) {
-                            /// hack: this is not sure if it's loading
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          } else {
-                            return Container();
-                          }
+                          return PokemonCard(pokemon: snapshot.data![index]);
                         },
                       );
                     }
