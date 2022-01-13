@@ -32,7 +32,7 @@ class PokemonInfo extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: theme.primaryColor,
+              color: pokemon.colors.first,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(24.0),
               ),
@@ -52,6 +52,31 @@ class PokemonInfo extends StatelessWidget {
                       buildIconButton(auth),
                     ],
                   ),
+                  Row(
+                    children: pokemon.kindList.map((kind) {
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4.0,
+                            vertical: 2.0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white70,
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Text(
+                            kind,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                   Text("#${pokemon.number}", style: theme.textTheme.headline4),
                 ],
               ),
@@ -70,7 +95,7 @@ class PokemonInfo extends StatelessWidget {
                     children: [
                       Container(
                         height: 96.0,
-                        decoration: BoxDecoration(color: theme.primaryColor),
+                        decoration: BoxDecoration(color: pokemon.colors.first),
                       ),
                       Image.network(
                         pokemon.imageURL,

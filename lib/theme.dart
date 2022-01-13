@@ -29,7 +29,7 @@ var theme = ThemeData(
       headline3: GoogleFonts.barlow(
         fontSize: 18.0,
         fontWeight: FontWeight.w500,
-        color: const Color(0xff232323),
+        color: const Color(0xe6ffffff),
       ),
       subtitle1: const TextStyle(
         fontSize: 18.0,
@@ -40,7 +40,7 @@ var theme = ThemeData(
         fontSize: 16.0,
         fontWeight: FontWeight.w300,
         fontStyle: FontStyle.italic,
-        color: const Color(0xff565656),
+        color: const Color(0xe6ffffff),
       ),
       /** pokemon info subtitle */
       headline4: GoogleFonts.barlow(

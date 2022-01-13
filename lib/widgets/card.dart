@@ -17,7 +17,7 @@ class PokemonCard extends StatelessWidget {
       onTap: () => PokemonInfo.showBottomSheet(context, pokemon),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: pokemon.colors.first,
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(

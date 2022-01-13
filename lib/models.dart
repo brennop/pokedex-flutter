@@ -4,6 +4,27 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pokedex/services/api.dart';
 
+const kinds = {
+  "normal": Color(0xffA8A77A),
+  "fire": Color(0xfffb6c6c),
+  "water": Color(0xff75bcfd),
+  "electric": Color(0xffF7D02C),
+  "grass": Color(0xff42c7a7),
+  "ice": Color(0xff96D9D6),
+  "fighting": Color(0xffC22E28),
+  "poison": Color(0xffA33EA1),
+  "ground": Color(0xffE2BF65),
+  "flying": Color(0xffA98FF3),
+  "psychic": Color(0xffF95587),
+  "bug": Color(0xffA6B91A),
+  "rock": Color(0xffB6A136),
+  "ghost": Color(0xff735797),
+  "dragon": Color(0xff6F35FC),
+  "dark": Color(0xff705746),
+  "steel": Color(0xffB7B7CE),
+  "fairy": Color(0xffD685AD),
+};
+
 class PokemonModel {
   final String name;
   final int number;
@@ -22,6 +43,16 @@ class PokemonModel {
 
   get readableName {
     return name[0].toUpperCase() + name.substring(1);
+  }
+
+  get colors {
+    return kind.split(";").map((k) => kinds[k]!).toList();
+  }
+
+  List<String> get kindList {
+    return kind.split(";").map((k) {
+      return k[0].toUpperCase() + k.substring(1);
+    }).toList();
   }
 }
 
