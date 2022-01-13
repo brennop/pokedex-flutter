@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/widgets/favorite_list.dart';
 import 'package:pokedex/widgets/widgets.dart';
+import 'package:pokedex/screens/screens.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

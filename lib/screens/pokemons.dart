@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models.dart';
-
-import 'widgets.dart';
+import 'package:pokedex/widgets/widgets.dart';
 
 class PokemonList extends StatefulWidget {
   const PokemonList({
@@ -63,6 +62,7 @@ class _PokemonListState extends State<PokemonList>
                 pokemon: pokemon,
                 onPress: () {
                   showModalBottomSheet(
+                    isScrollControlled: true,
                       backgroundColor: Colors.transparent,
                       context: context,
                       builder: (context) => PokemonInfo(pokemon: pokemon));
