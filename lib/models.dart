@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pokedex/services/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const kinds = {
   "normal": Color(0xffA8A77A),
@@ -110,11 +111,26 @@ class UserModel {
 class AuthModel extends ChangeNotifier {
   UserModel? _user;
 
+  AuthModel() {
+    SharedPreferences.getInstance().then((prefs) {
+      var username = prefs.getString("username");
+      if (username != null) {
+        API.getUser(username: username).then((response) {
+          var userData = json.decode(response.body);
+          user = UserModel.fromJSON(userData);
+        });
+      }
+    });
+  }
+
   UserModel? get user => _user;
 
   set user(UserModel? user) {
     _user = user;
     notifyListeners();
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString("username", user?.username ?? "");
+    });
   }
 
   Future addFavorite(name) {
