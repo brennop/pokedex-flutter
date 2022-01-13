@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/models.dart';
 import 'package:pokedex/services/api.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _userNameController = TextEditingController();
   bool _loading = false;
   String? _error;
 
-  void _onLogin() {
+  void _onRegister() {
     if (_loading) return;
 
     var username = _userNameController.text;
@@ -28,16 +28,14 @@ class _LoginScreenState extends State<LoginScreen> {
       _error = null;
     });
 
-    API.getUser(username: username).then((response) {
-      if (response.statusCode == 200) {
+    API.createUser(username: username).then((response) {
+      if (response.statusCode == 201) {
         var userData = json.decode(response.body);
-        var user = UserModel.fromJSON(userData);
+        var user = UserModel(userData["username"], []);
         Provider.of<AuthModel>(context, listen: false).user = user;
-        Navigator.of(context).pushNamed("/");
-      } else if (response.statusCode == 404) {
-        _error = "Usuário não encontrado";
+        Navigator.of(context).pushNamedAndRemoveUntil("/", (_) => false);
       } else {
-        throw Exception('Failed to load user');
+        throw Exception('Failed to create user');
       }
     }).catchError((error) {
       setState(() {
@@ -64,11 +62,12 @@ class _LoginScreenState extends State<LoginScreen> {
             minHeight: MediaQuery.of(context).size.height,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("assets/images/login.png"),
+                Row(children: const [BackButton(color: Colors.red)]),
+                Image.asset("assets/images/register.png"),
                 const SizedBox(height: 24.0),
                 Text(
                   "Explore e descubra o maravilhoso mundo Pokémon",
@@ -83,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 32.0),
                 TextField(
-                  onSubmitted: (value) => _onLogin(),
+                  onSubmitted: (value) => _onRegister(),
                   controller: _userNameController,
                   decoration: const InputDecoration(
                     hintText: "Nome do treinador",
@@ -103,22 +102,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: _onLogin,
+                        onPressed: _onRegister,
                         child: _loading
                             ? const CircularProgressIndicator(
                                 color: Colors.white,
                                 strokeWidth: 2.0,
                               )
-                            : const Text("Entrar"),
+                            : const Text("Criar Conta"),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24.0),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pushNamed("/register"),
-                  child: const Text("Criar Conta"),
-                )
               ],
             ),
           ),

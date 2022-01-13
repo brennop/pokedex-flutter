@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class API {
@@ -8,9 +10,16 @@ class API {
     return http.get(url);
   }
 
-  static Future getUser({required String username}) {
+  static Future<http.Response> getUser({required String username}) {
     var url = Uri.https(baseURL, "users/$username");
     return http.get(url);
+  }
+
+  static Future<http.Response> createUser({required String username}) {
+    var url = Uri.https(baseURL, "users");
+    var body = jsonEncode({"username": username});
+    return http
+        .post(url, body: body, headers: {"Content-Type": "application/json"});
   }
 
   static Future addPokemon(

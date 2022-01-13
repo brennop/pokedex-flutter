@@ -67,6 +67,8 @@ class UserModel {
   final String username;
   final List<PokemonModel> favorites;
 
+  UserModel(this.username, this.favorites);
+
   UserModel.fromJSON(Map json)
       : username = json["user"]["username"],
         favorites = List<Map>.from(json["pokemons"])

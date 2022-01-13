@@ -61,6 +61,16 @@ var theme = ThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
     ),
   ),
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      primary: primaryColor,
+      textStyle: const TextStyle(
+        decoration: TextDecoration.underline,
+        fontSize: 18.0,
+        fontWeight: FontWeight.w600,
+      )
+    ),
+  ),
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
     fillColor: const Color(0xffe0e0e0),
