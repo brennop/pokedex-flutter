@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:pokedex/models.dart';
 
@@ -18,23 +19,25 @@ class Header extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: TabBar(
-                        labelPadding: EdgeInsets.symmetric(
+                        labelPadding: const EdgeInsets.symmetric(
                           horizontal: 16.0,
                           vertical: 4.0,
                         ),
                         isScrollable: true,
-                        indicator: BoxDecoration(),
+                        indicator: const BoxDecoration(),
                         labelColor: Colors.red,
                         labelStyle: TextStyle(
                           fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
+                          fontFamily: GoogleFonts.barlow(
+                            fontWeight: FontWeight.bold,
+                          ).fontFamily,
                         ),
                         unselectedLabelColor: Colors.grey,
-                        tabs: [
+                        tabs: const [
                           Tab(text: "Todos"),
                           Tab(text: "Favoritos"),
                         ],

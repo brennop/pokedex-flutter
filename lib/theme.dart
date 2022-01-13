@@ -1,56 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// TODO: add colors
 const primaryColor = Color(0xffE51C44);
 
 var theme = ThemeData(
+  fontFamily: GoogleFonts.inter().fontFamily,
   primaryColor: primaryColor,
   backgroundColor: Colors.white,
   scaffoldBackgroundColor: Colors.white,
-  textTheme: const TextTheme(
-      button: TextStyle(
+  textTheme: TextTheme(
+      button: const TextStyle(
         fontSize: 18.0,
         fontWeight: FontWeight.w600,
       ),
-      headline1: TextStyle(
+      headline1: GoogleFonts.barlow(
         fontSize: 32.0,
         fontWeight: FontWeight.bold,
-        color: Color(0xff565656),
-        /* TODO: fontFamily: "Barlow" */
+        color: const Color(0xff565656),
       ),
       /** pokemon info title */
-      headline2: TextStyle(
+      headline2: GoogleFonts.barlow(
         fontSize: 36.0,
         fontWeight: FontWeight.bold,
         color: Colors.white,
-        /* TODO: fontFamily: "Barlow" */
       ),
       /** pokemon card title */
-      headline3: TextStyle(
+      headline3: GoogleFonts.barlow(
         fontSize: 18.0,
         fontWeight: FontWeight.w500,
-        color: Color(0xff232323),
-        /* TODO: fontFamily: "Barlow" */
+        color: const Color(0xff232323),
       ),
-      subtitle1: TextStyle(
+      subtitle1: const TextStyle(
         fontSize: 18.0,
         fontWeight: FontWeight.w500,
         color: Color(0xff838383),
-        /* TODO: fontFamily: "Inter" */
       ),
-      subtitle2: TextStyle(
+      subtitle2: GoogleFonts.barlow(
         fontSize: 16.0,
         fontWeight: FontWeight.w300,
         fontStyle: FontStyle.italic,
-        color: Color(0xff565656),
-        /* TODO: fontFamily: "Barlow" */
+        color: const Color(0xff565656),
       ),
       /** pokemon info subtitle */
-      headline4: TextStyle(
+      headline4: GoogleFonts.barlow(
         fontSize: 24.0,
         fontWeight: FontWeight.w500,
-        color: Color(0xfff6f6f6),
-        /* TODO: fontFamily: "Barlow" */
+        color: const Color(0xfff6f6f6),
       )),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
@@ -63,13 +59,12 @@ var theme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      primary: primaryColor,
-      textStyle: const TextStyle(
-        decoration: TextDecoration.underline,
-        fontSize: 18.0,
-        fontWeight: FontWeight.w600,
-      )
-    ),
+        primary: primaryColor,
+        textStyle: const TextStyle(
+          decoration: TextDecoration.underline,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w600,
+        )),
   ),
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
@@ -85,16 +80,14 @@ extension TextThemes on TextTheme {
       color: Color(0xff565656),
       fontSize: 18.0,
       fontWeight: FontWeight.w500,
-      /* TODO: fontFamily: "Inter" */
     );
   }
 
   TextStyle get infoValue {
-    return const TextStyle(
-      color: Color(0xff565656),
+    return GoogleFonts.barlow(
+      color: const Color(0xff565656),
       fontSize: 36.0,
       fontWeight: FontWeight.w600,
-      /* TODO: fontFamily: "Barlow" */
     );
   }
 }

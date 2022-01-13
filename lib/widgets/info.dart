@@ -95,7 +95,7 @@ class PokemonInfo extends StatelessWidget {
                         )
                       ],
                     ),
-                    const SizedBox(width: 36.0),
+                    const SizedBox(width: 48.0),
                     Column(
                       children: [
                         Text(
