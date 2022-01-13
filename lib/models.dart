@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:pokedex/services/api.dart';
 
 class PokemonModel {
@@ -59,5 +60,27 @@ class PokemonsModel {
       _page += 1;
       _loading = false;
     });
+  }
+}
+
+class UserModel {
+  final String username;
+  final List<PokemonModel> favorites;
+
+  UserModel.fromJSON(Map json)
+      : username = json["user"]["username"],
+        favorites = List<Map>.from(json["pokemons"])
+            .map(PokemonModel.fromJson)
+            .toList();
+}
+
+class AuthModel extends ChangeNotifier {
+  UserModel? _user;
+
+  UserModel? get user => _user;
+
+  set user(UserModel? user) {
+    _user = user;
+    notifyListeners();
   }
 }

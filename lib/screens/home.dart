@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models.dart';
 import 'package:pokedex/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           pokemon: pokemon,
                           onPress: () {
                             showModalBottomSheet(
-                              backgroundColor: Colors.transparent,
+                                backgroundColor: Colors.transparent,
                                 context: context,
                                 builder: (context) =>
                                     PokemonInfo(pokemon: pokemon));
@@ -88,11 +89,24 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(child: Text("Todos")),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.logout))
-      ],
+    return Consumer<AuthModel>(
+      builder: (context, auth, child) {
+        return Row(
+          children: [
+            Expanded(child: Text("Todos")),
+            IconButton(
+                onPressed: () {
+                  if (auth.user == null) {
+                    Navigator.of(context).pushNamed("/login");
+                  } else {
+                    auth.user = null;
+                  }
+                },
+                icon: Icon(
+                    auth.user == null ? Icons.account_circle : Icons.logout))
+          ],
+        );
+      },
     );
   }
 }

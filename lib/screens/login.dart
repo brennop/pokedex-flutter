@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex/models.dart';
+import 'package:pokedex/services/api.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -11,8 +16,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final _userNameController = TextEditingController();
 
   void _onLogin() {
-    /* final value = _userNameController.text; */
-    Navigator.of(context).pushNamed("home");
+    var username = _userNameController.text;
+    if(username == "") return;
+    API.getUser(username: username).then((response) {
+      var userData = json.decode(response.body);
+      var user = UserModel.fromJSON(userData);
+      Provider.of<AuthModel>(context, listen: false).user = user;
+      Navigator.of(context).pushNamed("/");
+    });
   }
 
   @override
