@@ -12,4 +12,16 @@ class API {
     var url = Uri.https(baseURL, "users/$username");
     return http.get(url);
   }
+
+  static Future addPokemon(
+      {required String username, required String pokemon}) {
+    var url = Uri.https(baseURL, "users/$username/starred/$pokemon");
+    return http.post(url);
+  }
+
+  static Future removePokemon(
+      {required String username, required String pokemon}) {
+    var url = Uri.https(baseURL, "users/$username/starred/$pokemon");
+    return http.delete(url);
+  }
 }

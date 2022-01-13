@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pokedex/models.dart';
+import 'package:pokedex/services/api.dart';
 import 'package:provider/provider.dart';
 
 class PokemonInfo extends StatelessWidget {
@@ -100,22 +103,22 @@ class PokemonInfo extends StatelessWidget {
 
     var favorite = auth.user!.favorites.any((p) => p.name == pokemon.name);
 
-    return favorite
-        ? IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.favorite,
-              color: Colors.white,
-              size: 32.0,
-            ),
-          )
-        : IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.favorite_border,
-              color: Colors.white,
-              size: 32.0,
-            ),
-          );
+    _onPressed() {
+      var fn = favorite ? API.removePokemon : API.addPokemon;
+
+      fn(username: auth.user!.username, pokemon: pokemon.name).then((response) {
+        var userData = json.decode(response.body);
+        auth.user = UserModel.fromJSON(userData);
+      });
+    }
+
+    return IconButton(
+      onPressed: _onPressed,
+      icon: Icon(
+        favorite ? Icons.favorite : Icons.favorite_border,
+        color: Colors.white,
+        size: 32.0,
+      ),
+    );
   }
 }
