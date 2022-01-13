@@ -12,39 +12,52 @@ class Header extends StatelessWidget {
     return Consumer<AuthModel>(
       builder: (context, auth, child) {
         return Container(
-          height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Expanded(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: TabBar(
-                    isScrollable: true,
-                    indicator: BoxDecoration(),
-                    labelColor: Colors.red,
-                    labelStyle: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
+              Row(
+                children: [
+                  const Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: TabBar(
+                        labelPadding: EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 4.0,
+                        ),
+                        isScrollable: true,
+                        indicator: BoxDecoration(),
+                        labelColor: Colors.red,
+                        labelStyle: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        unselectedLabelColor: Colors.grey,
+                        tabs: [
+                          Tab(text: "Todos"),
+                          Tab(text: "Favoritos"),
+                        ],
+                      ),
                     ),
-                    unselectedLabelColor: Colors.grey,
-                    tabs: [
-                      Tab(text: "Todos"),
-                      Tab(text: "Favoritos"),
-                    ],
                   ),
-                ),
+                  IconButton(
+                      onPressed: () {
+                        if (auth.user == null) {
+                          Navigator.of(context).pushNamed("/login");
+                        } else {
+                          auth.user = null;
+                        }
+                      },
+                      icon: Icon(auth.user == null
+                          ? Icons.account_circle
+                          : Icons.logout))
+                ],
               ),
-              IconButton(
-                  onPressed: () {
-                    if (auth.user == null) {
-                      Navigator.of(context).pushNamed("/login");
-                    } else {
-                      auth.user = null;
-                    }
-                  },
-                  icon: Icon(
-                      auth.user == null ? Icons.account_circle : Icons.logout))
+              const Divider(
+                color: Colors.black38,
+                height: 1,
+              ),
             ],
           ),
         );

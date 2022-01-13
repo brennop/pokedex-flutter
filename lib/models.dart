@@ -83,4 +83,22 @@ class AuthModel extends ChangeNotifier {
     _user = user;
     notifyListeners();
   }
+
+  Future addFavorite(name) {
+    return API
+        .addPokemon(username: user!.username, pokemon: name)
+        .then((response) {
+      var userData = json.decode(response.body);
+      user = UserModel.fromJSON(userData);
+    });
+  }
+
+  Future removeFavorite(name) {
+    return API
+        .removePokemon(username: user!.username, pokemon: name)
+        .then((response) {
+      var userData = json.decode(response.body);
+      user = UserModel.fromJSON(userData);
+    });
+  }
 }

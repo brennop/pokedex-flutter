@@ -14,6 +14,14 @@ class PokemonInfo extends StatelessWidget {
 
   final PokemonModel pokemon;
 
+  static showBottomSheet(BuildContext context, PokemonModel _pokemon) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) => PokemonInfo(pokemon: _pokemon));
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

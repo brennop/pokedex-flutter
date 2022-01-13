@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models.dart';
+import 'package:pokedex/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteList extends StatefulWidget {
@@ -22,13 +23,13 @@ class _FavoriteListState extends State<FavoriteList> {
         );
       } else {
         var favorites = auth.user!.favorites;
-        return ListView.builder(
+        return ListView.separated(
             itemCount: favorites.length,
+            padding: const EdgeInsets.all(24.0),
+            separatorBuilder: (context, index) => const SizedBox(height: 12.0),
             itemBuilder: (context, index) {
               var pokemon = favorites[index];
-              return ListTile(
-                title: Text(pokemon.name),
-              );
+              return Favorite(pokemon: pokemon);
             });
       }
     });

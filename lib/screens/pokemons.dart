@@ -47,7 +47,7 @@ class _PokemonListState extends State<PokemonList>
           return const Center(child: CircularProgressIndicator());
         } else {
           return GridView.builder(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(24.0),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 12.0,
@@ -58,16 +58,7 @@ class _PokemonListState extends State<PokemonList>
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               var pokemon = snapshot.data![index];
-              return PokemonCard(
-                pokemon: pokemon,
-                onPress: () {
-                  showModalBottomSheet(
-                    isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      builder: (context) => PokemonInfo(pokemon: pokemon));
-                },
-              );
+              return PokemonCard(pokemon: pokemon);
             },
           );
         }

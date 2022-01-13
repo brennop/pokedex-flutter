@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models.dart';
+import 'package:pokedex/widgets/widgets.dart';
 
 class PokemonCard extends StatelessWidget {
   const PokemonCard({
     Key? key,
     required this.pokemon,
-    required this.onPress,
   }) : super(key: key);
 
   final PokemonModel pokemon;
-  final void Function() onPress;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return InkWell(
-      onTap: onPress,
+      onTap: () => PokemonInfo.showBottomSheet(context, pokemon),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
